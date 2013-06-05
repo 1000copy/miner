@@ -109,37 +109,52 @@
 		}
 		return array("","");
 	}
-	$start = time_stub();
-	$book_config = array (
-			'booktitle'=>"Hitchhiker's Guide to the Galaxy",
-			'url'=>'http://yixieshu.com/bookchapter/',
-			'from'=>41705,
-			// 'to'=>41738,
-			'to'=>41705,
-			'xpath_title'=>'/html/head/title',
-			'xpath_content'=>'//*[@id="pageBody"]/div/div[3]');
-	// loop_get($book_config);
-	$book_config = array (
-			'booktitle'=>"The Terminal Man",
-			'url'=>'http://yixieshu.com/bookchapter/',
-			'from'=>45571,
-			// 'to'=>45571,
-			'to'=>45589,
-			'xpath_title'=>'/html/head/title',
-			'xpath_content'=>'//*[@id="pageBody"]/div/div[3]'
-			);
-	$book_config = array (
-			'booktitle'=>"Stars My Destination",
-			'url'=>'http://yixieshu.com/bookchapter/',
-			'from'=>45048,
-			// 'to'=>45571,
-			'to'=>45067,
-			'xpath_title'=>'/html/head/title',
-			'xpath_content'=>'//*[@id="pageBody"]/div/div[3]'
-			);
-	loop_get($book_config);
-
-	
+	function get_books(){
+		$start = time_stub();
+		$book_configs = array();
+		$book_config = array (
+				'booktitle'=>"Hitchhiker's Guide to the Galaxy",
+				'url'=>'http://yixieshu.com/bookchapter/',
+				'from'=>41705,
+				// 'to'=>41738,
+				'to'=>41705,
+				'xpath_title'=>'/html/head/title',
+				'xpath_content'=>'//*[@id="pageBody"]/div/div[3]');
+		array_push($book_configs, $book_config);
+		$book_config = array (
+				'booktitle'=>"The Terminal Man",
+				'url'=>'http://yixieshu.com/bookchapter/',
+				'from'=>45571,
+				// 'to'=>45571,
+				'to'=>45589,
+				'xpath_title'=>'/html/head/title',
+				'xpath_content'=>'//*[@id="pageBody"]/div/div[3]'
+				);
+		array_push($book_configs, $book_config);
+		$book_config = array (
+				'booktitle'=>"Song Dynasty",
+				'url'=>'http://yixieshu.com/bookchapter/',
+				'from'=>17534,
+				// 'to'=>45571,
+				'to'=>17633,
+				'xpath_title'=>'/html/head/title',
+				'xpath_content'=>'//*[@id="pageBody"]/div/div[3]'
+				);
+		array_push($book_configs, $book_config);
+		
+		$book_config = array (
+				'booktitle'=>"Stars My Destination",
+				'url'=>'http://yixieshu.com/bookchapter/',
+				'from'=>45048,
+				// 'to'=>45571,
+				'to'=>45067,
+				'xpath_title'=>'/html/head/title',
+				'xpath_content'=>'//*[@id="pageBody"]/div/div[3]'
+				);
+		array_push($book_configs, $book_config);
+		loop_get($book_configs[2]);
+	}
+	get_books();
 
 	echo time_stub() - $start;
 	count_elapse();
