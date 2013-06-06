@@ -116,8 +116,8 @@
 				'booktitle'=>"Hitchhiker's Guide to the Galaxy",
 				'url'=>'http://yixieshu.com/bookchapter/',
 				'from'=>41705,
-				// 'to'=>41738,
-				'to'=>41705,
+				'to'=>41738,
+				// 'to'=>41705,
 				'xpath_title'=>'/html/head/title',
 				'xpath_content'=>'//*[@id="pageBody"]/div/div[3]');
 		array_push($book_configs, $book_config);
@@ -152,7 +152,7 @@
 				'xpath_content'=>'//*[@id="pageBody"]/div/div[3]'
 				);
 		array_push($book_configs, $book_config);
-		loop_get($book_configs[2]);
+		loop_get($book_configs[0]);
 	}
 	get_books();
 
