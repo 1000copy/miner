@@ -1,4 +1,12 @@
 <?
+// wget 可以做到只是提取文件，而不去执行他。
+// wget  --post-data "LoginName=#8826&Password=****&LockNum=err*UserRank=0" http://192.168.99.1/zhang/VerifyUser.asp
+// 比如 post得到的文件
+// <SCRIPT LANGUAGE=javascript>	
+// 	window.open( 'Window.asp?UID={B78E9829-D2D7-4E94-A98F-F4BC5CAAAF25}...
+// </SCRIPT>
+// 如果是brower，会执行js，转向到另一个文件，你就看不到UID的值了。
+
 function packURL($title,$url){
 	return "<a href='{$url}'>{$title}</a>";
 }
@@ -19,13 +27,17 @@ function StrDelete($aString, $BeginPos, $Length)
   return $r;
 }
 function get_bbs(){
+	// echo "d";
 	$column_id = '001001033017';
-	$uid = "{96BCF9C4-E0F0-4A81-AAFF-A38C5A37294A}";
+	$uid = "{B78E9829-D2D7-4E94-A98F-F4BC5CAAAF25}";
+	$ip ="125.69.76.113";
+	$ip  = "192.168.99.1";
 	$url = "http://192.168.99.1/zhang/Bbs/List.asp?UID={$uid}&ColumnTypeID={$column_id}&PageNo=1";
-	// echo $url ;
+	// $url = "http://{$ip}/zhang/Bbs/List.asp?UID={$uid}&ColumnTypeID={$column_id}&PageNo=1";	
+	echo $url ;
 	$homepage = file_get_contents($url);
-	// echo $homepage;
-	// die();
+	echo $homepage;
+	die();
 	// select by class
 	// why it works in chrome find box ,but not works in php?
 	$xpath_row = "/html/body/table[3]/tbody/tr[@class='ListTableRow']";
@@ -58,7 +70,7 @@ function get_bbs(){
 			$id = paddingZero($id);
 			// echo $id;
 			$title = trim(StrDelete($element->childNodes->item(4)->nodeValue ,0,10));
-			echo packURL($title,"http://192.168.99.1/zhang/Bbs/Detail.asp?UID={$uid}&ColumnTypeID={$column_id}&TypeID={$id}");
+			echo packURL($title,"http://{$ip}/zhang/Bbs/Detail.asp?UID={$uid}&ColumnTypeID={$column_id}&TypeID={$id}");
 			
 			echo "<br/>";
 		}		      
