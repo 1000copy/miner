@@ -1,4 +1,5 @@
 <?
+include "f_get_uid.php";
 // wget 可以做到只是提取文件，而不去执行他。
 // wget  --post-data "LoginName=#8826&Password=****&LockNum=err*UserRank=0" http://192.168.99.1/zhang/VerifyUser.asp
 // 比如 post得到的文件
@@ -26,18 +27,18 @@ function StrDelete($aString, $BeginPos, $Length)
       $r .= $aString[$i];
   return $r;
 }
-function get_bbs(){
-	// echo "d";
-	$column_id = '001001033017';
-	$uid = "{B78E9829-D2D7-4E94-A98F-F4BC5CAAAF25}";
-	$ip ="125.69.76.113";
-	$ip  = "192.168.99.1";
-	$url = "http://192.168.99.1/zhang/Bbs/List.asp?UID={$uid}&ColumnTypeID={$column_id}&PageNo=1";
-	// $url = "http://{$ip}/zhang/Bbs/List.asp?UID={$uid}&ColumnTypeID={$column_id}&PageNo=1";	
-	echo $url ;
+
+function get_bbs($uid,$ip){	
+	$column_id = '001001033017'; // 内部公告栏
+	// $column_id = '001002001001'; //管理建议
+	// $column_id = '001002001021'; // 讨论软件开发 ,不同栏目，格式不同。我++
+	// $ip ="125.69.76.113";	
+	$url = "http://{$ip}/zhang/Bbs/List.asp?UID={$uid}&ColumnTypeID={$column_id}&PageNo=1";	
+	echo $url;
+	// echo $url ;
 	$homepage = file_get_contents($url);
-	echo $homepage;
-	die();
+	// echo $homepage;
+	// die();
 	// select by class
 	// why it works in chrome find box ,but not works in php?
 	$xpath_row = "/html/body/table[3]/tbody/tr[@class='ListTableRow']";
@@ -69,14 +70,49 @@ function get_bbs(){
 			$id = $element->childNodes->item(10)->nodeValue ;
 			$id = paddingZero($id);
 			// echo $id;
-			$title = trim(StrDelete($element->childNodes->item(4)->nodeValue ,0,10));
+			// $title = trim(StrDelete($element->childNodes->item(4)->nodeValue ,0,10));
+			$title = $element->childNodes->item(4)->nodeValue ;
 			echo packURL($title,"http://{$ip}/zhang/Bbs/Detail.asp?UID={$uid}&ColumnTypeID={$column_id}&TypeID={$id}");
 			
 			echo "<br/>";
-		}		      
+		}		
+		echo "<a href="">"      
 	}catch(Exception $e){
 		echo "$e";
 	}
 }
-get_bbs();
+$u = $_POST["usrname"];
+$p = $_POST["psw"];
+if ($u){
+	$ip  = "192.168.99.1";	
+	$uid = get_uid($u,$p,"http://{$ip}/zhang/VerifyUser.asp");	
+	if ($uid != 'not guid')
+		get_bbs($uid,$ip);
+	else
+		echo "login in error ,check your user name and password!";
+	die();
+}
+// get_bbs();
+
 ?>
+<html>
+<head>
+ <title>龟壳</title>
+</head>
+<body>
+	<form method="post" action="<?echo $_SERVER["PHP_SELF"];?>">
+		<div style="padding-left:50px;">
+		    <br/>用户:<br/>
+		    <input name="usrname" type="text" size="24" maxlength="60" value="#8826"/><br/><br/>
+		    密码:<br/>
+		    <input name="psw" type="password" size="10" maxlength="20" value=""/>　　
+		    <!-- <a href="/user/resetpsw">忘记密码了</a><br/> -->
+		    <br/><br/>
+		    <!-- <input name="remember" type="checkbox"/>&nbsp;
+		    <span class="pl">在这台电脑上记住我(一个月之内不用再登录)</span> -->
+		    
+		    <input name="user_login" class="butt" type="submit" value="进入"/>
+		</div>
+	</form>
+</body>
+</html>
