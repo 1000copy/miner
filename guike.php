@@ -30,9 +30,9 @@ function StrDelete($aString, $BeginPos, $Length)
 
 function get_bbs($uid,$ip){	
 	$column_id = '001001033017'; // 内部公告栏
-	$column_id = '001002001001'; //管理建议
-	$column_id = '001002001021'; // 讨论软件开发 ,不同栏目，格式不同。我++
-	// $ip ="125.69.76.113";	
+	// $column_id = '001002001001'; //管理建议
+	// $column_id = '001002001021'; // 讨论软件开发 ,不同栏目，格式不同。我++
+	$ip ="125.69.76.113";	
 	$url = "http://{$ip}/zhang/Bbs/List.asp?UID={$uid}&ColumnTypeID={$column_id}&PageNo=1";	
 	echo $url;
 	// echo $url ;
@@ -84,7 +84,8 @@ function get_bbs($uid,$ip){
 $u = $_POST["usrname"];
 $p = $_POST["psw"];
 if ($u){
-	$ip  = "192.168.99.1";	
+	// $ip  = "192.168.99.1";	
+	$ip ="125.69.76.113";	
 	$uid = get_uid($u,$p,"http://{$ip}/zhang/VerifyUser.asp");	
 	if ($uid != 'not guid')
 		get_bbs($uid,$ip);
