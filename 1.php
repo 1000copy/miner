@@ -76,7 +76,7 @@ function get_bbs($uid,$ip){
 			
 			echo "<br/>";
 		}		
-		echo "<a href="">"      
+		echo "<a href=''>";
 	}catch(Exception $e){
 		echo "$e";
 	}
@@ -86,6 +86,8 @@ $p = $_POST["psw"];
 if ($u){
 	$ip  = "192.168.99.1";	
 	$uid = get_uid($u,$p,"http://{$ip}/zhang/VerifyUser.asp");	
+	header('Content-Type: text/html; charset=utf-8');
+	header('Cache-Control:max-age=110');
 	if ($uid != 'not guid')
 		get_bbs($uid,$ip);
 	else
@@ -97,6 +99,7 @@ if ($u){
 ?>
 <html>
 <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
  <title>龟壳</title>
 </head>
 <body>
